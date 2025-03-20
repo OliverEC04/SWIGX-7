@@ -9,11 +9,18 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
     private bool logAvailableWebcams;
     [SerializeField]
     private int selectedWebcamIndex;
+        // GUI.TextField(new Rect(10, 10, 256, 25), lastResult);
+
+        public int rectX = 10;
+        public int rectY = 10;
+        public int rectWidth = 256;
+        public int rectHeight = 25;
+
 
     private WebCamTexture camTexture;
     private Color32[] cameraColorData;
     private int width, height;
-    private Rect screenRect;
+    public Rect screenRect;
 
     // create a reader with a custom luminance source
     private IBarcodeReader barcodeReader = new BarcodeReader {
@@ -62,7 +69,8 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
         // show camera image on screen
         GUI.DrawTexture(screenRect, camTexture, ScaleMode.ScaleToFit);
         // show decoded text on screen
-        GUI.TextField(new Rect(10, 10, 256, 25), lastResult);
+        // GUI.TextField(new Rect(10, 10, 256, 25), lastResult);
+        GUI.TextField(new Rect(rectX, rectY, rectWidth, rectHeight), lastResult);
     }
 
     private void OnDestroy() {
