@@ -1,7 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using ZXing;
 
 public class StandaloneEasyReaderSample : MonoBehaviour {
+
+    public Transform boxTransform;
 
     [SerializeField]
     private string lastResult;
@@ -53,14 +56,24 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
         }
     }
 
+    float qrcodeSize =  5;// 18; // 5; // 5 cm
+    float FOCAL_LENGTH = 500; // 2600; // 600; // i pixels
+    public float distanceFromCam = 0.0f;
+    float diagonal;
+    public Transform boxTrans;
     private void Update() {
         if (camTexture.isPlaying) {
             // decoding from camera image
             camTexture.GetPixels32(cameraColorData); // -> performance heavy method 
             result = barcodeReader.Decode(cameraColorData, width, height); // -> performance heavy method
             if (result != null) {
-                lastResult = result.Text + " " + result.BarcodeFormat;
-                print(lastResult);
+                Debug.Log("First Point: " + result.ResultPoints[0] + "\n Third point: " + result.ResultPoints[2]);
+                diagonal = Mathf.Sqrt(Mathf.Pow(result.ResultPoints[0].X - result.ResultPoints[2].X, 2) + Mathf.Pow(result.ResultPoints[0].Y - result.ResultPoints[2].Y, 2));
+                distanceFromCam = (qrcodeSize * FOCAL_LENGTH) / diagonal;
+                boxTrans.position = new Vector3(result.ResultPoints[0].X/10, -result.ResultPoints[0].Y/10, distanceFromCam / 10);
+                // Debug.Log("Distance from camera: " + distanceFromCam + " cm");
+                // lastResult = result.Text + " " + result.BarcodeFormat;
+                // print(lastResult);
             }
         }
     }
@@ -70,7 +83,7 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
         GUI.DrawTexture(screenRect, camTexture, ScaleMode.ScaleToFit);
         // show decoded text on screen
         // GUI.TextField(new Rect(10, 10, 256, 25), lastResult);
-        GUI.TextField(new Rect(rectX, rectY, rectWidth, rectHeight), lastResult);
+        // GUI.TextField(new Rect(rectX, rectY, rectWidth, rectHeight), lastResult);
     }
 
     private void OnDestroy() {
