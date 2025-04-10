@@ -46,7 +46,7 @@ while True:
         # cv2.putText(frame, qr_data, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
         cv2.putText(frame, f"{diagonal:.2f}", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
         # Vi skal kende bredden af QR koden i "real-world units" (centimeter)
-        KNOWN_WIDTH = 5.0  # bredden af QR koden (er rimelig tæt på 5 cm)
+        KNOWN_WIDTH = 5.0 # 20 # 5.0  # bredden af QR koden (er rimelig tæt på 5 cm)
         FOCAL_LENGTH = 400 # 200 # 500 # 600 # 700  #  focal length af kameraet
 
         # Calculate the diagonal from the camera to the QR code
