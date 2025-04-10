@@ -56,8 +56,8 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
         }
     }
 
-    float qrcodeSize =  5;// 18; // 5; // 5 cm
-    float FOCAL_LENGTH = 500; // 2600; // 600; // i pixels
+    float qrcodeSize =  16.5f;// 18; // 5; // 5 cm
+    float FOCAL_LENGTH = 570; // 2600; // 600; // i pixels
     public float distanceFromCam = 0.0f;
     float diagonal;
     public Transform boxTrans;
@@ -67,7 +67,7 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
             camTexture.GetPixels32(cameraColorData); // -> performance heavy method 
             result = barcodeReader.Decode(cameraColorData, width, height); // -> performance heavy method
             if (result != null) {
-                Debug.Log("First Point: " + result.ResultPoints[0] + "\n Third point: " + result.ResultPoints[2]);
+                // Debug.Log("First Point: " + result.ResultPoints[0] + "\n Third point: " + result.ResultPoints[2]);
                 diagonal = Mathf.Sqrt(Mathf.Pow(result.ResultPoints[0].X - result.ResultPoints[2].X, 2) + Mathf.Pow(result.ResultPoints[0].Y - result.ResultPoints[2].Y, 2));
                 distanceFromCam = (qrcodeSize * FOCAL_LENGTH) / diagonal;
                 boxTrans.position = new Vector3(result.ResultPoints[0].X/10, -result.ResultPoints[0].Y/10, distanceFromCam);
@@ -78,9 +78,14 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
         }
     }
 
+    public int borderWidth = 40;
+    public int borderRadius = 40;
+    public float aspect = 0;
     private void OnGUI() {
         // show camera image on screen
         GUI.DrawTexture(screenRect, camTexture, ScaleMode.ScaleToFit);
+        // GUI.DrawTexture(screenRect, camTexture, ScaleMode.ScaleAndCrop, true, 0, Color.white, 50, 10);
+
         // show decoded text on screen
         // GUI.TextField(new Rect(10, 10, 256, 25), lastResult);
         // GUI.TextField(new Rect(rectX, rectY, rectWidth, rectHeight), lastResult);
