@@ -61,6 +61,7 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
     public float distanceFromCam = 0.0f;
     float diagonal;
     public Transform boxTrans;
+    public Vector3 boxPosOffset;
     private void Update() {
         if (camTexture.isPlaying) {
             // decoding from camera image
@@ -70,7 +71,7 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
                 // Debug.Log("First Point: " + result.ResultPoints[0] + "\n Third point: " + result.ResultPoints[2]);
                 diagonal = Mathf.Sqrt(Mathf.Pow(result.ResultPoints[0].X - result.ResultPoints[2].X, 2) + Mathf.Pow(result.ResultPoints[0].Y - result.ResultPoints[2].Y, 2));
                 distanceFromCam = (qrcodeSize * FOCAL_LENGTH) / diagonal;
-                boxTrans.position = new Vector3(result.ResultPoints[0].X/10, -result.ResultPoints[0].Y/10, distanceFromCam);
+                boxTrans.position = new Vector3(distanceFromCam, -result.ResultPoints[0].Y/2,result.ResultPoints[0].X/10 ) + boxPosOffset;
                 // Debug.Log("Distance from camera: " + distanceFromCam + " cm");
                 // lastResult = result.Text + " " + result.BarcodeFormat;
                 // print(lastResult);
