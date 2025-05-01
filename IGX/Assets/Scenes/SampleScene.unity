@@ -164,7 +164,7 @@ MonoBehaviour:
     height: 0
   distanceFromCam: 0
   boxTrans: {fileID: 495512807}
-  boxPosOffset: {x: 70, y: 150, z: 150}
+  boxPosOffset: {x: 130, y: 120, z: 120}
   borderWidth: 5
   borderRadius: 2
   aspect: 0
@@ -683,7 +683,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 137, y: 0, z: 49}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1465,8 +1465,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3190915383743397378, guid: 3ecff543972a6474b8ad12a4ef4c94b6, type: 3}
       propertyPath: speeeed
-      value: 0.4
+      value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 3190915383743397378, guid: 3ecff543972a6474b8ad12a4ef4c94b6, type: 3}
+      propertyPath: pipePrefab
+      value: 
+      objectReference: {fileID: 910943580003105353, guid: de257de12cae4414f83a91d347b41b85, type: 3}
     - target: {fileID: 3190915383743397378, guid: 3ecff543972a6474b8ad12a4ef4c94b6, type: 3}
       propertyPath: floorPrefab
       value: 
@@ -1478,6 +1482,14 @@ PrefabInstance:
     - target: {fileID: 3190915383743397378, guid: 3ecff543972a6474b8ad12a4ef4c94b6, type: 3}
       propertyPath: despawnDistance
       value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190915383743397378, guid: 3ecff543972a6474b8ad12a4ef4c94b6, type: 3}
+      propertyPath: bottomPipeOffset.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190915383743397378, guid: 3ecff543972a6474b8ad12a4ef4c94b6, type: 3}
+      propertyPath: bottomPipeOffset.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8913059457141263385, guid: 3ecff543972a6474b8ad12a4ef4c94b6, type: 3}
       propertyPath: m_LocalPosition.x

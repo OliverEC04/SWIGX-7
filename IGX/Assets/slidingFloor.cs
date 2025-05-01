@@ -12,17 +12,49 @@ public class SlidingFloor : MonoBehaviour
     void Start()
     {
         floor = GenerateMoreFloor();
+        SpawnPipes();
     }
     void FixedUpdate()
     {
         // speeeed = Mathf.Min(speeeed + acceleration * Time.fixedDeltaTime/100, maxSpeed);
         floor.transform.position = new Vector3(floor.transform.position.x, floor.transform.position.y, floor.transform.position.z + speeeed);
-        // timer that determines when to spawn more foor:
         if (floor.transform.position.z > despawnDistance)
         {
             Destroy(floor);
             floor = GenerateMoreFloor();
+            SpawnPipes();
+
         }
+    }
+    public GameObject pipePrefab;
+    public GameObject[] topPipeSpawnpoints;
+    public GameObject[] bottomPipeSpawnpoints;
+    public Vector3 bottomPipeOffset = new Vector3(0, 0, 10f);
+    public void SpawnPipes() 
+    {
+        topPipeSpawnpoints = GameObject.FindGameObjectsWithTag("TopPipe");
+        bottomPipeSpawnpoints = GameObject.FindGameObjectsWithTag("BottomPipe");
+        for (int i = 0; i < topPipeSpawnpoints.Length; i++)
+        {
+            int spawnChance = Random.Range(0, 2);
+            if (spawnChance == 0)
+            {
+                Instantiate(pipePrefab, topPipeSpawnpoints[i].transform.position, Quaternion.Euler(180, 0, 0)).transform.parent = floor.transform;
+            }
+        }
+        for (int i = 0; i < bottomPipeSpawnpoints.Length; i++)
+        {
+            int spawnChance = Random.Range(0, 2);
+            if (spawnChance == 0)
+            {
+                Instantiate(pipePrefab, bottomPipeSpawnpoints[i].transform.position + bottomPipeOffset, Quaternion.identity).transform.parent = floor.transform;
+            }
+        }
+
+        // int randomTopIndex = Random.Range(0, topPipeSpawnpoints.Length);
+        // int randomBottomIndex = Random.Range(0, bottomPipeSpawnpoints.Length);
+        // Instantiate(pipePrefab, topPipeSpawnpoints[randomTopIndex].transform.position, Quaternion.Euler(180, 0, 0)).transform.parent = floor.transform;
+        // Instantiate(pipePrefab, bottomPipeSpawnpoints[randomBottomIndex].transform.position, Quaternion.identity).transform.parent = floor.transform;
     }
 
     public GameObject floorPrefab;
