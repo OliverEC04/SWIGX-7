@@ -1,6 +1,8 @@
 import cv2
 from pyzbar.pyzbar import decode
 
+verbose = True
+
 # Open webcam
 cap = cv2.VideoCapture(0)
 
@@ -13,20 +15,23 @@ while True:
     qr_codes = decode(frame)
     for qr in qr_codes:
         qr_data = qr.data.decode('utf-8')
-        # print(f"QR Code Data: {qr_data}")
+        if verbose:
+            print(f"QR Code Data: {qr_data}")
 
         try:
-            # print(f"\nqr.polygon: {qr.polygon}\n")
+            if verbose:
+                print(f"\nqr.polygon: {qr.polygon}\n")
             pts = qr.polygon
             if len(pts) == 4:
                 pts = [(p.x, p.y) for p in pts]
-                # print(f"\npts: {pts}\n")
+                if verbose:
+                    print(f"\npts: {pts}\n")
                 colours = [(0, 0, 255), (0, 255, 0), (255, 0, 0), (255, 0, 255)]
                 for pt in pts:
                     cv2.circle(frame, pt, radius=6, color=colours[pts.index(pt)], thickness=-1)
                 # ----------------- sidelængde -----------------
                 # cv2.line(frame, pts[0], pts[1], color=(255, 255, 0), thickness=2)
-                # p2p = (pts[0][0] - pts[0][1]) # ustabil, da det skifter hvad der er punkt 1 og 3
+                # p2p = (pts[0][0] - pts[0][1]) # kan være ustabil, da den bytter om på hvad der er punkt 1 og 3
                 # print(f"afstand mellem punkt 1 og 3: {p2p}")
                 # ------------------------------------------------
 
@@ -36,14 +41,16 @@ while True:
 
                 print(f"længde af diagonalen for kode {qr_codes.index(qr)}: {diagonal}")
                 # ------------------------------------------------
-                # cv2.polylines(frame, [pts], isClosed=True, color=(0, 255, 0), thickness=2)
+                if verbose:
+                    cv2.polylines(frame, [pts], isClosed=True, color=(0, 255, 0), thickness=2)
             else:
                 print("der var ikke 4 punkter")
         except:
             print("ku ikk tegne noget")
         # Put the decoded text on the screen
         x, y, w, h = qr.rect
-        # cv2.putText(frame, qr_data, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+        if verbose:
+            cv2.putText(frame, qr_data, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2) # Hvis man vil have teksten på skærmen
         cv2.putText(frame, f"{diagonal:.2f}", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1)
         # Vi skal kende bredden af QR koden i "real-world units" (centimeter)
         KNOWN_WIDTH = 5.0 # 20 # 5.0  # bredden af QR koden (er rimelig tæt på 5 cm)
