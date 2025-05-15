@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using ZXing;
@@ -43,7 +44,7 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
         lastResult = "http://www.google.com";
 
         cameraColorData = new Color32[width * height];
-        screenRect = new Rect(0, 0, Screen.width, Screen.height);
+        screenRect = new Rect(0, 0, Screen.width/4, Screen.height/4);
     }
 
     private void OnEnable() {
@@ -108,6 +109,7 @@ public class StandaloneEasyReaderSample : MonoBehaviour {
         camTexture = new WebCamTexture(selectedWebcamDeviceName);
         camTexture.requestedHeight = Screen.height;
         camTexture.requestedWidth = Screen.width;
+        Debug.Log("Screen Height: " + Screen.height + " Screen Width: " + Screen.width);
     }
 
     private void PlayWebcamTexture() {

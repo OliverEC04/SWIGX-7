@@ -26,5 +26,6 @@ public class BirdScript : MonoBehaviour
         Debug.Log("YOU LOST");
         loseText.SetActive(true);
         CancelInvoke("IncreaseScore");
+        GameObject.Find("Manager").GetComponent<gameManager>().ShowButtons();
     }
 }
